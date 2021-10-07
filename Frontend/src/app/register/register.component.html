@@ -1,0 +1,26 @@
+<h1 class="message" *ngIf="isSignedUp; else signUp">
+  You registered successfully. Please login!
+</h1>
+<ng-template #signUp>
+  <form class="authentication-form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <h1 class="form-field">Register</h1>
+    <mat-form-field class="form-field" appearance="fill" color="basic">
+      <mat-label>Username</mat-label>
+      <input type="text" matInput name="username" #username="ngModel" [(ngModel)]="form.username" required>
+      <ng-template *ngIf="f.submitted && username.invalid">
+        <mat-error *ngIf="username.errors.required">Username is required</mat-error>
+        <mat-error *ngIf="username.errors.minlength">Username must be at least 6 characters</mat-error>
+      </ng-template>
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input type="password" autocomplete="off" matInput name="password" #password="ngModel" [(ngModel)]="form.password" required>
+      <ng-template *ngIf="f.submitted && password.invalid">
+        <mat-error *ngIf="password.errors.required">Password is required</mat-error>
+        <mat-error *ngIf="password.errors.minlength">Password must be at least 6 characters</mat-error>
+      </ng-template>
+    </mat-form-field>
+    <button class="form-field" mat-raised-button color="primary" type="submit">Sign up</button>
+  </form>
+  <h1 style="margin-top: 20px;" class="message" *ngIf="f.submitted && isSignedUpFailed">Signup failed: {{errorMessage}}</h1>
+</ng-template>

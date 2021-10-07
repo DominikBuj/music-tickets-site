@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: white;
+  background-color: #212121;
+}
+
+.message {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.authentication-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.form-field {
+  padding: 5px 0;
+}
+
+.list {
+  margin: 0 15%;
+  padding: 0;
+  list-style-type: none;
+}
+
+.list-element {
+  margin: 10px 0;
+}

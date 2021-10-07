@@ -1,0 +1,28 @@
+<ul class="list" *ngIf="hasAdminAuthority(); else notAllowed">
+  <li class="list-element" *ngFor="let user of userList">
+    <mat-card>
+      <mat-card-content>
+        <p class="user-text">User: {{user.username}}</p>
+        <h1 class="message" *ngIf="user.tickets.length === 0; else userHasTickets">
+          This user has not purchased any tickets
+        </h1>
+      </mat-card-content>
+    </mat-card>
+    <ng-template #userHasTickets>
+      <ul class="list">
+        <li class="list-element" *ngFor="let ticket of user.tickets">
+          <mat-card>
+            <mat-card-content>
+              <p class="ticket-text">Artist: {{ticket.artist}}, City: {{ticket.city}}</p>
+              <p class="ticket-text">Price: {{ticket.price}} $&nbsp;, Amount: {{ticket.amount}}</p>
+              <p class="ticket-text">Sum: {{ticket.price * ticket.amount}} $&nbsp;</p>
+            </mat-card-content>
+          </mat-card>
+        </li>
+      </ul>
+    </ng-template>
+  </li>
+</ul>
+<ng-template #notAllowed>
+  <h1 class="message">You cannot access this page</h1>
+</ng-template>

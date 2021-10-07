@@ -1,0 +1,50 @@
+<div *ngIf="boughtTicket">
+  <h1 class="message">You have successfully purchased a ticket to see {{boughtTicket.artist}}</h1>
+  <h1 class="message">Go to the "Your Tickets" tab to see it</h1>
+</div>
+
+<div class="container">
+  <form *ngIf="hasAdminAuthority()" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+    <h1 class="title">Add Event</h1>
+    <mat-form-field class="artist" appearance="fill" color="basic">
+      <mat-label>Artist</mat-label>
+      <input type="text" matInput name="artist" #artist="ngModel" [(ngModel)]="form.artist" required>
+      <mat-error *ngIf="f.submitted && artist.invalid && artist.errors.required">Artist is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="city" appearance="fill" color="basic">
+      <mat-label>City</mat-label>
+      <mat-select name="cityName" #cityName="ngModel" [(ngModel)]="form.cityName">
+        <mat-option *ngFor="let city of availableCities" value="{{city}}">{{city}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="price" appearance="fill" color="basic">
+      <mat-label>Price</mat-label>
+      <input type="number" min="0" step="1" matInput name="price" #price="ngModel" [(ngModel)]="form.price" required>
+      <span matPrefix>$&nbsp;</span>
+      <mat-error *ngIf="f.submitted && price.invalid && price.errors.required">Price is required</mat-error>
+    </mat-form-field>
+    <button class="submit" type="submit" mat-raised-button color="primary">Add</button>
+  </form>
+</div>
+
+
+<ul class="list">
+  <li class="list-element" *ngFor="let event of sortedEvents()">
+    <mat-card>
+      <mat-card-content>
+        <p>Artist: {{event.artist}}</p>
+        <p>City: {{event.city}}</p>
+        <p>Price: {{event.price}} $&nbsp;</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-form-field *ngIf="hasUserAuthority()">
+          <mat-label>Ticket Amount</mat-label>
+          <input matInput #ticketsAmountInput type="number" min="0" (change)="ticketsAmount = ticketsAmountInput.valueAsNumber;">
+        </mat-form-field>
+        <button *ngIf="hasUserAuthority()" mat-raised-button color="primary"
+                (click)="ticketsAmount && ticketsAmount !== 0 && buyTicket(event.city, event.artist, event.price, this.ticketsAmount);">Buy</button>
+        <button *ngIf="hasAdminAuthority()" (click)="deleteEvent(event)" mat-raised-button color="primary">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+  </li>
+</ul>

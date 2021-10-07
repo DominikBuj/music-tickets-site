@@ -1,0 +1,22 @@
+<div *ngIf="hasUserAuthority(); else notAllowed">
+  <h1 class="message" *ngIf="!currentUser || (currentUser.tickets && currentUser.tickets.length === 0); else hasTickets">
+    You currently have no purchased tickets.
+  </h1>
+  <ng-template #hasTickets>
+    <ul class="list">
+      <li class="list-element" *ngFor="let ticket of currentUser.tickets">
+        <mat-card>
+          <mat-card-content>
+            <p>Artist: {{ticket.artist}}, City: {{ticket.city}}</p>
+            <p>Price: {{ticket.price}} $&nbsp;, Amount: {{ticket.amount}}</p>
+            <p>Sum: {{ticket.price * ticket.amount}} $&nbsp;</p>
+            <button mat-raised-button color="primary" (click)="deleteTicket(ticket, currentUser.username)">Delete</button>
+          </mat-card-content>
+        </mat-card>
+      </li>
+    </ul>
+  </ng-template>
+</div>
+<ng-template #notAllowed>
+  <h1 class="message">You cannot access this page</h1>
+</ng-template>

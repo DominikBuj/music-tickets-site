@@ -1,0 +1,20 @@
+<div class="container">
+  <div>
+    <nav>
+      <mat-toolbar color="primary">
+        <h2>Music Events Site</h2>
+        <ng-template *ngIf="!authorities || authorities.length === 0; then loggedOut else loggedIn"></ng-template>
+        <ng-template #loggedOut><a mat-button routerLink="/authentication/login">Login</a></ng-template>
+        <ng-template #loggedIn><a mat-button (click)="signOut()">Logout</a></ng-template>
+        <span class="spacer"></span>
+        <a mat-button routerLink="/events">Events</a>
+        <span class="spacer"></span>
+        <a *ngIf="hasUserAuthority()" mat-button routerLink="/tickets">Your Tickets</a>
+        <a *ngIf="hasAdminAuthority()" mat-button routerLink="/users">Registered Users</a>
+      </mat-toolbar>
+    </nav>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
